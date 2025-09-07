@@ -10,9 +10,12 @@ variables:
   containerRegistry: 'ThreeTierApplication_ServiceConnection'
   imageName:: 'nodeJS-App'
   imageTag: $(Build.BuildId)
+  System.Debug: true
 
 pool:
-  vmName: SelfHostedLinuxVM
+  name: SelfHostedLinuxVM
+  demands:
+    agent -equals AzurePipelineVM
 
 steps:
 - task: NodeTool@0
@@ -23,6 +26,7 @@ steps:
 - script: |
     cd server
     npm install
+  timeoutInMinutes: 300
   displayName: 'npm install the dependencies'
 
 - script: |
