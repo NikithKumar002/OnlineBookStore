@@ -21,14 +21,9 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    pwd
-    ls
+    cd server
     npm install
   displayName: 'npm install the dependencies'
-
-- script: |
-    npm run build
-  displayName: 'npm build'
 
 - script: |
     npm run test
