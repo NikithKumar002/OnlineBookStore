@@ -1,0 +1,11 @@
+{
+  "categoryDescription": "",
+  "categoryId": null,
+  "bookName": "",
+  "bookId": null,
+  "authorName": "",
+  "testEmail": "",
+  "testUser": "",
+  "userId": null,
+  "categoryName": ""
+}
