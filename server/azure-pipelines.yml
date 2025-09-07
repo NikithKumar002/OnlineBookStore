@@ -24,6 +24,8 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    ls
+    pwd
     cd server
     npm install
   timeoutInMinutes: 300
