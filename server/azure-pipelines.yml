@@ -6,6 +6,12 @@
 trigger:
 - master
 
+variables:
+  containerRegistry: 'ThreeTierApplication_ServiceConnection'
+  imageName:: 'nodeJS-App'
+  imageTag: $(Build.BuildId)
+
+
 pool:
   vmImage: ubuntu-latest
 
@@ -29,8 +35,8 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: $containerRegistry
-    repository: '$(branch)/$(imageTag)'
+    containerRegistry: 'ThreeTierApplication_ServiceConnection'
+    repository: '$(branch)/$(imageName)'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: |
