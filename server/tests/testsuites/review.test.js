@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../../server');
 const printAfter = require('./helper/printAfter');
 const printBefore = require('./helper/printBefore');
-const { readSharedData, writeSharedData } = require('./variables/sharedDataUtil');
+const { readSharedData } = require('./variables/sharedDataUtil');
 
 const sharedData = readSharedData();
 

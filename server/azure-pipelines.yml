@@ -11,9 +11,8 @@ variables:
   imageName:: 'nodeJS-App'
   imageTag: $(Build.BuildId)
 
-
 pool:
-  vmImage: ubuntu-latest
+  vmName: SelfHostedLinuxVM
 
 steps:
 - task: NodeTool@0
