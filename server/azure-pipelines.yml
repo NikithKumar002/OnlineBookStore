@@ -28,8 +28,17 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)/server
 
 - script: |
-    docker run -d -p 27017:27017 --name mongodb mongo:latest
-  displayName: 'Run mongodb container'
+    container=$(docker ps -aq -f name=mongodb)
+    if [ -z $container ]; then
+      echo "No MongoDB container found — creating and starting it..."
+      docker run -d -p 27017:27017 --name mongodb mongo:latest
+    elif [ $(docker inspect -f '{{.State.Running}}' mongodb) = "false" ]; then
+      echo "MongoDB container not running — starting it..."
+      docker start mongodb
+    else
+      echo "MongoDB already running"
+    fi
+  displayName: 'Check mongodb container status'
 
 - script: |
     npm run start
