@@ -32,6 +32,11 @@ steps:
   displayName: 'Run mongodb container'
 
 - script: |
+    npm run start
+  displayName: 'npm start'
+  workingDirectory: $(Build.SourcesDirectory)/server
+
+- script: |
     npm run test
   displayName: 'npm test'
   workingDirectory: $(Build.SourcesDirectory)/server
