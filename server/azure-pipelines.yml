@@ -28,6 +28,11 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)/server
 
 - script: |
+    docker run -d -p 27017:27017 --name mongodb mongo:latest
+  displayName: 'Setup Mongo for the backend compiler'
+
+
+- script: |
     npm run test
   displayName: 'npm test'
   workingDirectory: $(Build.SourcesDirectory)/server
