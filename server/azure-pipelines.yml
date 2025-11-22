@@ -41,7 +41,8 @@ steps:
   displayName: 'Check mongodb container status'
 
 - script: |
-    npm run start
+    npm run start &
+    SERVER_PID=$!
   displayName: 'npm start'
   workingDirectory: $(Build.SourcesDirectory)/server
 
@@ -49,6 +50,13 @@ steps:
     npm run test
   displayName: 'npm test'
   workingDirectory: $(Build.SourcesDirectory)/server
+
+- script: |
+    echo "Stopping server with PID $SERVER_PID"
+    kill $SERVER_PID
+    echo "Stopping MongoDB container"
+    docker stop mongodb
+  displayName: 'Stopping server and mongoDB containers'
 
 - task: Docker@2
   inputs:
