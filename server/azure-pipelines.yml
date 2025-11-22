@@ -20,10 +20,6 @@ steps:
   inputs:
     versionSpec: '16.x'
   displayName: 'Install Node.js'
-- task: DockerInstaller@0
-  inputs:
-    dockerVersion: 'latest'
-  displayName: 'Install Docker'
   
 - script: |
     npm install
