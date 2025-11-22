@@ -23,14 +23,15 @@ steps:
 
 - script: |
     npm install
+    apt-get install -y docker.io
+    docker --version
   timeoutInMinutes: 300
-  displayName: 'npm install the dependencies'
+  displayName: 'npm install the dependencies and docker'
   workingDirectory: $(Build.SourcesDirectory)/server
 
 - script: |
     docker run -d -p 27017:27017 --name mongodb mongo:latest
   displayName: 'Run mongodb container'
-
 
 - script: |
     npm run test
