@@ -22,16 +22,15 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    ls
-    pwd
-    cd server
     npm install
   timeoutInMinutes: 300
   displayName: 'npm install the dependencies'
+  workingDirectory: $(Build.SourcesDirectory)/server
 
 - script: |
     npm run test
   displayName: 'npm test'
+  workingDirectory: $(Build.SourcesDirectory)/server
 
 - task: Docker@2
   inputs:
