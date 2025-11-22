@@ -15,7 +15,7 @@ variables:
 pool:
   name: SelfHostedLinuxVM
   demands:
-    agent -equals AzurePipelineVM
+    agent -equals AzurePipelineLinuxVM
 
 steps:
 - task: NodeTool@0
