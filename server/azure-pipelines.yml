@@ -67,7 +67,6 @@ steps:
     tags: |
       $(imageTag)
   displayName: "Build and push Image container Registry"
-  workingDirectory: $(Build.SourcesDirectory)/server 
 
 - task: PublishTestResults@2
   inputs:
@@ -76,4 +75,3 @@ steps:
     failTaskOnFailedTests: true
   condition: succeededOrFailed()
   displayName: "Publish Jest JUnit Test Results"
-  workingDirectory: $(Build.SourcesDirectory)/server/tests
