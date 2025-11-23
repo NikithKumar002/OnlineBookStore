@@ -61,7 +61,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'ThreeTierApplication_ServiceConnection'
-    repository: '$(branch)/$(imageName)'
+    repository: '$(Build.SourceBranchName)/$(imageName)'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: |
@@ -70,7 +70,7 @@ steps:
 
 - task: PublishTestResults@2
   inputs:
-    testResultsFiles: "**/jest-junit.xml"
+    testResultsFiles: "server/jest-stare/jest-junit.xml"
     testRunTitle: "Jest Tests"
     failTaskOnFailedTests: true
   condition: succeededOrFailed()
