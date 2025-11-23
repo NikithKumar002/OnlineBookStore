@@ -8,7 +8,7 @@ trigger:
 
 variables:
   containerRegistry: 'ThreeTierApplication_ServiceConnection'
-  imageName:: 'nodeJS-App'
+  imageName: 'backend-server'
   imageTag: $(Build.BuildId)
   System.Debug: true
 
@@ -56,14 +56,12 @@ steps:
     kill $SERVER_PID
     echo "Stopping MongoDB container"
     docker stop mongodb
-    SAFE_IMAGE=$(echo "$(imageName)" | tr '[:upper:]' '[:lower:]' | sed 's#[^a-z0-9_.-]#-#g')
-    echo "##vso[task.setvariable variable=SAFE_IMAGE]$SAFE_IMAGE"
   displayName: 'Stopping server and mongoDB containers'
 
 - task: Docker@2
   inputs:
     containerRegistry: 'ThreeTierApplication_ServiceConnection'
-    repository: '$(Build.SourceBranchName)/$(SAFE_IMAGE)'
+    repository: '$(Build.SourceBranchName)/$(imageName)'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: |
