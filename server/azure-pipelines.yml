@@ -47,8 +47,8 @@ steps:
   workingDirectory: $(Build.SourcesDirectory)/server
 
 - script: |
-    npm run test
-  displayName: 'npm test'
+    npm run test -- --ci --runInBand
+  displayName: 'npm Jest Test Suites'
   workingDirectory: $(Build.SourcesDirectory)/server
 
 - script: |
@@ -67,3 +67,13 @@ steps:
     tags: |
       $(imageTag)
   displayName: "Build and push Image container Registry"
+  workingDirectory: $(Build.SourcesDirectory)/server 
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFiles: "**/jest-junit.xml"
+    testRunTitle: "Jest Tests"
+    failTaskOnFailedTests: true
+  condition: succeededOrFailed()
+  displayName: "Publish Jest JUnit Test Results"
+  workingDirectory: $(Build.SourcesDirectory)/server/tests

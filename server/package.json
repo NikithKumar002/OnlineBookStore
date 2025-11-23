@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js ",
-    "test": "jest ./tests/main.test.js --runInBand --ci --verbose --detectOpenHandles"
+    "test": "jest --runInBand --verbose --detectOpenHandles tests/ordered.test.js"
   },
   "keywords": [],
   "author": "nikith",
