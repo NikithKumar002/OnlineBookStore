@@ -17,3 +17,9 @@ server/jest-stare
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+
+# Terraform files
+*.tfstate
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.backup
