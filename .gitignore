@@ -1,17 +1,8 @@
-# Logs
-app/logs
-app/*.log
-app/npm-debug.log*
-app/yarn-debug.log*
-app/yarn-error.log*
-app/pnpm-debug.log*
-app/lerna-debug.log*
-
+# Node modules and build outputs
 app/server/node_modules
 app/server/dist
 app/server/dist-ssr
-app/server/*.local
-
+app/server/*.local.env
 app/server/jest-stare
 
 # Editor directories and files
