@@ -1,25 +1,25 @@
 # Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+app/logs
+app/*.log
+app/npm-debug.log*
+app/yarn-debug.log*
+app/yarn-error.log*
+app/pnpm-debug.log*
+app/lerna-debug.log*
 
-server/node_modules
-server/dist
-server/dist-ssr
-server/*.local
+app/server/node_modules
+app/server/dist
+app/server/dist-ssr
+app/server/*.local
 
-server/jest-stare
+app/server/jest-stare
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 
 # Terraform files
-*.tfstate
-.terraform/
-.terraform.lock.hcl
-terraform.tfstate.backup
+terraform-module/AzureDevOpsPipeline/.terraform/
+terraform-module/AzureDevOpsPipeline/*.tfstate
+terraform-module/AzureDevOpsPipeline/terraform.tfstate.backup
+terraform-module/OnlineBookStore/.terraform.lock.hcl
