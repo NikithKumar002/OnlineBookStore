@@ -308,7 +308,7 @@ const addUpdateReviewController = async(req, res) => {
                 message: "Book not found."
             });
         };
-        const checkUser = await userModel.findById({ _id:userId });
+        const checkUser = await userModel.findById({ _id:reviewerId });
         if(!checkUser){
             console.log("User not found, Please sign up to add the review.");
             return res.status(404).send({
