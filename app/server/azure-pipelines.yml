@@ -60,7 +60,7 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: 'ThreeTierApplication_ServiceConnection'
+    containerRegistry: 'AzurePipelineCR'
     repository: '$(Build.SourceBranchName)/$(imageName)'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
