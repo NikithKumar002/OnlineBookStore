@@ -7,7 +7,7 @@ trigger:
 - master
 
 variables:
-  containerRegistry: 'ThreeTierApplication_ServiceConnection'
+  containerRegistry: 'myonlinebookstore_serviceConnection'
   imageName: 'backend-server'
   imageTag: $(Build.BuildId)
   System.Debug: true
