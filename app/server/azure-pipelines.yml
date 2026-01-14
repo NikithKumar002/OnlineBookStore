@@ -25,7 +25,7 @@ steps:
     npm install
   timeoutInMinutes: 300
   displayName: 'npm install the dependencies'
-  workingDirectory: $(Build.SourcesDirectory)/server
+  workingDirectory: $(Build.SourcesDirectory)/app/server
 
 - script: |
     container=$(docker ps -aq -f name=mongodb)
