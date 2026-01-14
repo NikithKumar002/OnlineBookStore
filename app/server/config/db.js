@@ -6,7 +6,7 @@ const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/onlinebooks
 const connectDB = async() => {
     try {
         await mongoose.connect(mongoURI);
-        console.log("Successfully Connected to MongoDB Database");
+        console.log("Successfully Connected to MongoDB Database", mongoURI);
     } catch (error) {
         console.log("Failed to connect to the DB", error);
     }
