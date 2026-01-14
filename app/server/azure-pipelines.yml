@@ -44,12 +44,12 @@ steps:
     npm run start &
     SERVER_PID=$!
   displayName: 'npm start'
-  workingDirectory: $(Build.SourcesDirectory)/server
+  workingDirectory: $(Build.SourcesDirectory)/app/server
 
 - script: |
     npm run test -- --ci --runInBand
   displayName: 'npm Jest Test Suites'
-  workingDirectory: $(Build.SourcesDirectory)/server
+  workingDirectory: $(Build.SourcesDirectory)/app/server
 
 - script: |
     echo "Stopping server with PID $SERVER_PID"
