@@ -2,7 +2,12 @@ const mongoose = require("mongoose");
 const { resetSharedValues } = require("./scripts/mongoSharedData");
 
 beforeAll(async () => {
-    await mongoose.connect("mongodb://127.0.0.1:27017/onlinebookstore");
+    console.log("Current connection state:", mongoose.connection.readyState);
+    if (mongoose.connection.readyState === 0) {
+        console.log("Connecting to MongoDB...");
+        await mongoose.connect("mongodb://127.0.0.1:27017/onlinebookstore");
+    }
+    console.log("Connected to MongoDB.");
     console.log("Resetting shared test collection...");
     await resetSharedValues();
 });

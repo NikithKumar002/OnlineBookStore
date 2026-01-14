@@ -93,6 +93,22 @@ resource "azurerm_linux_virtual_machine" "AzurePipelineVM" {
     admin_password = var.admin_password
     disable_password_authentication = false
 
+    provisioner "remote-exec" {
+        connection {
+          type = "ssh"
+          user = var.admin_username
+          password = var.admin_password
+          host = self.public_ip_address
+        }
+        inline = [
+            "sudo apt-get update -y",
+            "sudo apt-get install docker.io -y",
+            "sudo systemctl start docker",
+            "sudo systemctl enable docker",
+            "sudo usermod -aG docker ${var.admin_username}"
+        ]
+    }
+
     tags           = var.common_tags
     depends_on = [
         azurerm_network_interface.NIC_AzurePipelineVM,
