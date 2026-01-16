@@ -75,7 +75,7 @@ resource "azurerm_linux_virtual_machine" "AzurePipelineVM" {
     resource_group_name   = azurerm_resource_group.AzurePipelineRG.name
     location              = azurerm_resource_group.AzurePipelineRG.location
     network_interface_ids = [azurerm_network_interface.NIC_AzurePipelineVM.id]
-    size                  = "Standard_D4s_v3"
+    size                  = "Standard_D2s_v3"
 
     os_disk {
         caching              = "ReadWrite"

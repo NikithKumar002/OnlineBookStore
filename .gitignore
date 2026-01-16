@@ -14,3 +14,7 @@ terraform-module/AzureDevOpsPipeline/.terraform/
 terraform-module/AzureDevOpsPipeline/*.tfstate
 terraform-module/AzureDevOpsPipeline/terraform.tfstate.backup
 terraform-module/OnlineBookStore/.terraform.lock.hcl
+
+terraform-module/DeployApplication/back-end/.terraform/
+terraform-module/DeployApplication/back-end/*.tfstate
+terraform-module/DeployApplication/back-end/terraform.tfstate.backup
