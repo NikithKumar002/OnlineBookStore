@@ -30,3 +30,4 @@ variable "admin_password" {
     default = "azureuser@123"
     description = "Password for the SSH login"
 }
+

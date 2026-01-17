@@ -1,0 +1,46 @@
+version: "2"
+
+services:
+  frontend:
+    build:
+      context: ./frontend-bookstore
+    container_name: bookstore-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - db-data:/data/db:rw
+    depends_on:
+      - webapp
+    networks:
+      - front-tier
+      - back-tier
+
+  webapp:
+    build:
+      context: ./server
+    container_name: bookstore-backend
+    expose:
+      - "3000"
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/onlinebookstore
+    depends_on:
+      - mongodb
+    networks:
+      - back-tier
+  
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - db-data:/data/db:rw
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+    external: false
+
+networks:
+  back-tier: {}
+  front-tier: {}

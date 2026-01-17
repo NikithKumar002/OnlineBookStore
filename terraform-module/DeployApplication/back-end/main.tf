@@ -51,6 +51,17 @@ resource "azurerm_network_security_group" "Backend_NSG" {
         source_port_range = "*"
         destination_port_range = 22
     }
+    security_rule {
+        name = "Allow-HTTP"
+        priority = 101
+        direction = "Inbound"
+        access = "Allow"
+        protocol = "Tcp"
+        source_address_prefix = "0.0.0.0/0"
+        source_port_range = "*"
+        destination_address_prefix = "${azurerm_network_interface.Backend_NIC.private_ip_address}"
+        destination_port_range = 80
+    }
 }
 
 resource "azurerm_public_ip" "AzurePipelineVM_PublicIP" {
@@ -121,8 +132,8 @@ resource "azurerm_linux_virtual_machine" "Backend_VM" {
     }
 
     provisioner "file" {
-        source = "./templates/docker-compose.yml ./templates/pre-exec.sh ./templates/nginx.conf"
-        destination = "/home/${var.admin_username}/docker-compose.yml /home/${var.admin_username}/pre-exec.sh /home/${var.admin_username}/nginx.conf"
+        source = "templates"
+        destination = "/home/${var.admin_username}/"
         connection {
           type = "ssh"
           user = var.admin_username
@@ -144,8 +155,7 @@ data "azurerm_container_registry" "getACR" {
 
 resource "azurerm_role_assignment" "Backend_VM_ACR_Pull" {
     depends_on = [
-        azurerm_linux_virtual_machine.Backend_VM, 
-        data.azurerm_container_registry.getACR
+        azurerm_linux_virtual_machine.Backend_VM
     ]
 
     scope                = data.azurerm_container_registry.getACR.id
@@ -167,8 +177,8 @@ resource "null_resource" "run_docker_compose_backend" {
           host = azurerm_linux_virtual_machine.Backend_VM.public_ip_address
         }
         inline = [
-            "chmod +x /home/${var.admin_username}/pre-exec.sh",
-            "/home/${var.admin_username}/pre-exec.sh"
+            "chmod +x /home/${var.admin_username}/templates/pre-exec.sh",
+            "sudo /home/${var.admin_username}/templates/pre-exec.sh ${data.azurerm_container_registry.getACR.login_server} ${var.admin_username}"
         ]
     }
 }
