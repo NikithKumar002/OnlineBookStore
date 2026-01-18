@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 console.log("In Auth Controller, processing the request");
 
 // User registration
@@ -62,9 +63,24 @@ const loginController = async (req, res) => {
         if (!validatePassword) {
             return res.status(401).send({
                 success: false,
-                message: "Incorrect password, Please try again."
+                message: "Invalid Credentials, Please try again."
             });
         }
+        const token = jwt.sign(
+            {
+                userId: user._id,
+                email: user.email,
+                role: user.role || "USER",
+            }, 
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN || "7d" }
+        );
+        res.json({
+            token,
+            userId: user._id,
+            email: user.email,
+            role: user.role || "USER"
+        });
         res.status(200).send({
             success: true,
             message: "Login Successful",

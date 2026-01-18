@@ -1,7 +1,7 @@
 
 const express = require("express");
 const router = express.Router();
-
+const auth = require("../middleware/authMiddleware");
 const { 
     addNewBookController, 
     listAllBookController, 
@@ -12,14 +12,14 @@ const {
     addUpdateReviewController
 } = require("../controllers/bookControllers");
 
-router.put("/create", addNewBookController);
-router.get("/listAll", listAllBookController);
-router.get("/category/:categoryId", listAllBookByCategoryController);
-router.get("/author/:authorName", listAllBookByAuthorController);
-router.post("/update/:bookId", updateBookController);
-router.delete("/delete/:bookId", deleteBookController);
-router.post("/review/:bookId/:reviewerId", addUpdateReviewController);
-router.put("/review/:bookId/:reviewerId", addUpdateReviewController);
+router.put("/create", auth, addNewBookController);
+router.get("/listAll", auth, listAllBookController);
+router.get("/category/:categoryId", auth, listAllBookByCategoryController);
+router.get("/author/:authorName", auth, listAllBookByAuthorController);
+router.post("/update/:bookId", auth, updateBookController);
+router.delete("/delete/:bookId", auth, deleteBookController);
+router.post("/review/:bookId/:reviewerId", auth, addUpdateReviewController);
+router.put("/review/:bookId/:reviewerId", auth, addUpdateReviewController);
 
 
 module.exports = router;

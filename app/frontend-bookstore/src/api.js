@@ -1,19 +1,18 @@
-const BASE_URL = "http://localhost:3000";
+import axios from "axios";
 
-export const api = async (url, method = "GET", body = null, token = null) => {
-  const headers = {
+const api = axios.create({
+  baseURL: "http://localhost:80", // Nginx URL
+  headers: {
     "Content-Type": "application/json",
-  };
+  },
+});
 
+export const setAuthToken = (token) => {
   if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers.common["Authorization"];
   }
-
-  const res = await fetch(`${BASE_URL}${url}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : null,
-  });
-
-  return res.json();
 };
+
+export default api;
