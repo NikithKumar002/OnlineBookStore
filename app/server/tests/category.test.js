@@ -14,7 +14,9 @@ describe("Category API Tests", () => {
     it('should add a new category', async () => {
         let categoryName = await newCategoryName();
         let categoryDescription = await newCategoryDescription();
+        let token = await getSharedKeyValue("token");
         const res = await request(app).put('/api/v1/category/create')
+                                    .set("Authorization", `Bearer ${token}`)
                                     .send({
                                         categoryName: categoryName,
                                         categoryDescription: categoryDescription
@@ -32,6 +34,7 @@ describe("Category API Tests", () => {
         let categoryName = await getSharedKeyValue("categoryName") + "_updated";
         let categoryDescription = `Updated description for ${categoryName} category.`;
         const res = await request(app).post(`/api/v1/category/update/${await getSharedKeyValue("categoryId")}`)
+                                    .set("Authorization", `Bearer ${token}`)
                                     .send({
                                         categoryName: categoryName,
                                         categoryDescription: categoryDescription
@@ -46,13 +49,15 @@ describe("Category API Tests", () => {
     });
 
     it("should list all categories", async () => {
-        const res = await request(app).get("/api/v1/category/list");
+        const res = await request(app).get("/api/v1/category/list")
+                                    .set("Authorization", `Bearer ${token}`);
         expect(res.statusCode).toBe(200);
         expect(Array.isArray(res.body.result)).toBe(true);
     });
 
     // it('should delete a category by name', async () => {
-    //     const res = await request(app).delete(`/api/v1/category/delete/${categoryName}`);
+    //     const res = await request(app).delete(`/api/v1/category/delete/${categoryName}`)
+    //                                 .set("Authorization", `Bearer ${token}`);
     //     expect(res.statusCode).toBe(200);
     //     expect(res.body.success).toBe(true);
     // });

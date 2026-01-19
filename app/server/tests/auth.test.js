@@ -40,6 +40,7 @@ describe("Authentication API Tests", () => {
         expect(res.statusCode).toBe(200);
         expect(res.body.success).toBe(true);
         console.log("Login Response: ", res.body);
+        await setSharedKeyValue("token", res.body.token);
         console.log(await getAllSharedKeyValues());
     });
 });
