@@ -1,5 +1,11 @@
 trigger:
-- master
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    include:
+      - app/frontend-bookstore/*
 
 variables:
   containerRegistry: 'myonlinebookstore_serviceConnection'
