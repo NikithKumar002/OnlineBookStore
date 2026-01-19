@@ -75,16 +75,15 @@ const loginController = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: process.env.JWT_EXPIRES_IN || "7d" }
         );
-        res.json({
-            token,
-            userId: user._id,
-            email: user.email,
-            role: user.role || "USER"
-        });
-        res.status(200).send({
+        res.status(200).json({
             success: true,
             message: "Login Successful",
-            user
+            token,
+            user: {
+                userId: user._id,
+                email: user.email,
+                role: user.role || "USER"
+            }
         });
     } catch (error) {
         console.log(error);

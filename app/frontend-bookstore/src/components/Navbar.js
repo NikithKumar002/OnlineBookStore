@@ -6,20 +6,22 @@ export default function Navbar({ onAction }) {
 
   return (
     <div style={nav}>
-      <h3>Online Book Store</h3>
+      <h2>Online Book Store</h2>
       {!user ? (
         <>
-        <div>   
-            <button onClick={() => onAction("login")}>Login</button>
-            <button onClick={() => onAction("register")}>Register</button>
-        </div>
+          <div style={navButtons}>   
+            <button onClick={() => onAction("User Login")}>Sign In</button>
+            <button onClick={() => onAction("New User Registration")}>Sign Up</button>
+          </div>
         </>
       ) : (
         <>
-          <button onClick={() => onAction("books")}>Books</button>
-          <button onClick={() => onAction("category")}>Category</button>
-          <button onClick={() => onAction("review")}>Review</button>
-          <ProfileMenu />
+          <div style={navButtons}>
+            <button onClick={() => onAction("books")}>Books</button>
+            <button onClick={() => onAction("category")}>Category</button>
+            <button onClick={() => onAction("review")}>Review</button>
+            <ProfileMenu />
+          </div>
         </>
       )}
     </div>
@@ -27,8 +29,13 @@ export default function Navbar({ onAction }) {
 }
 
 const nav = {
-  display: "flex",
+  textAlign: "center",
+  alignItems: "center",
   justifyContent: "space-between",
   padding: 10,
   background: "#eee",
 };
+
+const navButtons = {
+  textAlign: "right", 
+}
