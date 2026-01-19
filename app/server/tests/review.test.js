@@ -8,8 +8,9 @@ const printAfter = require("./helpers/printAfter");
 describe("Review API Tests", () => {
     beforeAll(() => printBefore("Review Test Suite"));
     afterAll(() => printAfter("Review Test Suite"));
-    let token = getSharedKeyValue("token");
+
     it("should add a review", async () => {
+        let token = await getSharedKeyValue("token");
         const res = await request(app).put(`/api/v1/books/review/${await getSharedKeyValue("bookId")}/${await getSharedKeyValue("userId")}`).set("Authorization", `Bearer ${token}`)
                                     .send({
                                         rating: 5,
@@ -21,6 +22,7 @@ describe("Review API Tests", () => {
     });
 
     it("should update a review", async () => {
+        let token = await getSharedKeyValue("token");
         const res = await request(app).post(`/api/v1/books/review/${await getSharedKeyValue("bookId")}/${await getSharedKeyValue("userId")}`).set("Authorization", `Bearer ${token}`)
                                     .send({
                                         rating: 4,

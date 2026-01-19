@@ -9,7 +9,7 @@ const printAfter = require('./helpers/printAfter');
 
 describe("Category API Tests", () => {
     beforeAll(() => printBefore("Category Test Suite"));
-    afterAll(() => printAfter("Category Test Suite"));
+    afterAll(() => printAfter("Category Test Suite")); 
 
     it('should add a new category', async () => {
         let categoryName = await newCategoryName();
@@ -33,6 +33,7 @@ describe("Category API Tests", () => {
     it('should update the category', async () => {
         let categoryName = await getSharedKeyValue("categoryName") + "_updated";
         let categoryDescription = `Updated description for ${categoryName} category.`;
+        let token = await getSharedKeyValue("token");
         const res = await request(app).post(`/api/v1/category/update/${await getSharedKeyValue("categoryId")}`)
                                     .set("Authorization", `Bearer ${token}`)
                                     .send({
@@ -49,6 +50,7 @@ describe("Category API Tests", () => {
     });
 
     it("should list all categories", async () => {
+        let token = await getSharedKeyValue("token");
         const res = await request(app).get("/api/v1/category/list")
                                     .set("Authorization", `Bearer ${token}`);
         expect(res.statusCode).toBe(200);

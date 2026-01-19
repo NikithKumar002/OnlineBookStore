@@ -9,7 +9,7 @@ const printAfter = require("./helpers/printAfter");
 describe("Books API Tests", () => {
     beforeAll(() => printBefore("Books Test Suite"));
     afterAll(() => printAfter("Books Test Suite"));
-
+    
     it("should create a book", async () => {
         let bookName = newBookTitle();
         let authorName = newAuthorName();
@@ -43,6 +43,8 @@ describe("Books API Tests", () => {
         let bookName = await getSharedKeyValue("bookName") + "_updated";
         let authorName = await getSharedKeyValue("authorName") + "_updated";
         let categoryName = await getSharedKeyValue("categoryName");
+        let token = await getSharedKeyValue("token");
+
         const res = await request(app).post(`/api/v1/books/update/${await getSharedKeyValue("bookId")}`)
                                     .set("Authorization", `Bearer ${token}`)
                                     .send({
@@ -64,18 +66,24 @@ describe("Books API Tests", () => {
     });
 
     it("should list all books", async () => {
+        let token = await getSharedKeyValue("token");
+
         const res = await request(app).get("/api/v1/books/listAll").set("Authorization", `Bearer ${token}`);
         expect(res.statusCode).toBe(200);
         expect(Array.isArray(res.body.result)).toBe(true);
     });
 
     it("should fetch books by category", async () => {
+        let token = await getSharedKeyValue("token");
+
         const res = await request(app).get(`/api/v1/books/category/${await getSharedKeyValue("categoryId")}`).set("Authorization", `Bearer ${token}`);
         expect(res.statusCode).toBe(200);
         expect(Array.isArray(res.body.result)).toBe(true);
     });
 
     it("should fetch books by author name", async () => {
+        let token = await getSharedKeyValue("token");
+        
         const res = await request(app).get(`/api/v1/books/author/${await getSharedKeyValue("authorName")}`).set("Authorization", `Bearer ${token}`);
         expect(res.statusCode).toBe(200);
         expect(Array.isArray(res.body.result)).toBe(true);
