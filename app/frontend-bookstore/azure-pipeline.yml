@@ -1,0 +1,22 @@
+trigger:
+- master
+
+variables:
+  containerRegistry: 'myonlinebookstore_serviceConnection'
+  imageName: 'frontend-server'
+  imageTag: $(Build.BuildId)
+  System.Debug: true
+
+pool:
+  name: SelfHostedLinuxVM
+
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: '$(containerRegistry)'
+    repository: '$(Build.SourceBranchName)/$(imageName)'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      $(imageTag)
+  displayName: "Build and push Image container Registry"
