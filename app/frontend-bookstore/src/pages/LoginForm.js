@@ -4,31 +4,60 @@ import { useAuth } from "../auth/AuthContext";
 
 export default function LoginForm({ onSuccess}) {
   const { login } = useAuth();
+  const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginButton = async () => {
-    const res = await api.post("/api/v1/auth/login", { email, password });
-    if (!res.data.success) {
-        alert("Login failed: " + res.data.message);
-        return;
+  const loginButton = async (e) => {
+    e.preventDefault();
+    try {
+        const res = await api.post("/api/v1/auth/login", { email, password });
+        if (!res.data.success) {
+            setError("Login failed: " + res.data.message);
+            return;
+        }
+        setError("");
+        console.log("Login Response:", res.data);
+        login({
+            token: res.data.token,
+            email: res.data.email,
+        });
+        onSuccess();
+    } catch (error) {
+        console.log(error);
+        setError(
+            error.response?.data?.message || "Something went wrong"
+        );
     }
-    console.log("Login Response:", res.data);
-    login(res.data);
-    onSuccess();
   };
 
   return (
     <>
         <div style={div_styles}>
             <form style={form_styles}>            
-                <input style = {input_styles} placeholder="Email" onChange={e => setEmail(e.target.value)} />
-                <input style = {input_styles} type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} />
-            </form>
+                <input 
+                    style = {input_styles} 
+                    placeholder="Email" 
+                    onChange={e => setEmail(e.target.value)} 
+                />
+                <input 
+                    style = {input_styles} 
+                    type="password" 
+                    placeholder="Password" 
+                    onChange={e => setPassword(e.target.value)} 
+                />
+
             <span style={span_styles}></span>
-            <a style={a_styles} href="/forgot-password">Forgot Password?</a>
+            <a style={a_styles} href="#forgotpassword">Forgot Password?</a>
             <span style={span_styles}></span>
+            <span style={span_styles}></span>
+            {error && (
+                <div style={{ color: "red", fontSize: "14px", marginTop: "8px" }}>
+                    {error}
+                </div>
+            )}
             <button style={button_styles} onClick={loginButton}>SignIn</button>
+            </form>
         </div>
         
     </>

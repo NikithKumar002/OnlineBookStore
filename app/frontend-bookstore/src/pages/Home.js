@@ -2,16 +2,13 @@ import { useAuth } from "../auth/AuthContext";
 
 export default function Home() {
   const { user } = useAuth();
+  console.log("Home User:", user);
 
   return (
     <div style={container}>
-      <h1>{user.email}</h1>
-      console.log("Home User:", user);
-
+      <h1>{user.email}</h1>      
       <h2>Welcome, {user?.email}</h2>
-
       <p>You are successfully logged in.</p>
-
       <div style={cards}>
         <div style={card}>Manage Books</div>
         <div style={card}>Manage Categories</div>

@@ -5,8 +5,17 @@ services:
     build:
       context: ./frontend-bookstore
     container_name: bookstore-frontend
+    volumes:
+      - ./frontend-bookstore:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - BACKEND_HOST=bookstore-backend
+      - PORT=3000
+    # ports:
+    #   - "80:80"
     ports:
-      - "80:80"
+      - "3000:3000"
     depends_on:
       - webapp
     networks:
@@ -17,16 +26,25 @@ services:
     build:
       context: ./server
     container_name: bookstore-backend
-    expose:
-      - "3000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    # expose:
+    #   - "3000"
+    ports:
+      - "3001:3000"
     environment:
-      - MONGODB_URI=mongodb://mongodb:27017/onlinebookstore
+      - MONGO_URI=mongodb://bookstore-mongodb:27017/onlinebookstore
       - PORT=3000
+      - JWT_SECRET=super_secret_key_123
+      - JWT_EXPIRES_IN=1d
+      - ACCESS_TOKEN_EXPIRE=15m
+      - REFRESH_TOKEN_EXPIRE=7d
     depends_on:
       - mongodb
     networks:
       - back-tier
-  
+
   mongodb:
     image: mongo:latest
     container_name: bookstore-mongodb
