@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:24
 
 WORKDIR /app
 
@@ -8,9 +8,13 @@ RUN npm install
 
 COPY . .
 
-ENV MONGO_URI=mongodb://mongodb:27017/onlinebookstore
-ENV PORT=3000
-
 EXPOSE 3000
 
 CMD ["npm", "start"]
+
+# ENV MONGO_URI=mongodb://mongodb:27017/onlinebookstore
+# ENV PORT=3000
+
+# EXPOSE 3000
+
+# CMD ["npm", "start"]

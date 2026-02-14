@@ -25,11 +25,11 @@ export default function BooksForm() {
       <input placeholder="Stock" onChange={e => setBook({ ...book, stock: Number(e.target.value) })} />
       <input placeholder="Price" onChange={e => setBook({ ...book, price: Number(e.target.value) })} />
 
-      <button onClick={() => api.put("/api/v1/books/create", book)}>
+      <button onClick={() => api.post("/api/v1/books/create", book)}>
         Create Book
       </button>
 
-      <button onClick={() => api.post(`/api/v1/books/update/${bookId}`, book)}>
+      <button onClick={() => api.put(`/api/v1/books/update/${bookId}`, book)}>
         Update Book
       </button>
 

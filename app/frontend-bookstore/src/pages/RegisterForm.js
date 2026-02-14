@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api";
 
 export default function RegisterForm({ onSuccess }) {
+  const [error, setError] = useState("");
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -10,14 +11,23 @@ export default function RegisterForm({ onSuccess }) {
     address: "",
   });
 
-  const register = async () => {
-    const res = await api.post("/api/v1/auth/register", form);
-    if (!res.data.success) {
-      alert("Registration failed: " + res.data.message);
-      return;
+  const register = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api.post("/api/v1/auth/register", form);
+      if (!res.data.success) {
+        setError("Registration failed: " + res.data.message);
+        return;
+      }
+      setError("");
+      console.log("Register response:", res.data);
+      alert("Registration successful");
+      onSuccess();
+    } catch (error) {
+      setError(
+        error.response?.data?.message || "Something went wrong"
+      )
     }
-    alert("Registration successful");
-    onSuccess();
   };
 
   return (
@@ -29,10 +39,16 @@ export default function RegisterForm({ onSuccess }) {
           <input style={input_styles} type="password" placeholder="Password" onChange={e => setForm({ ...form, password: e.target.value })} />
           <input style={input_styles} placeholder="Phone" onChange={e => setForm({ ...form, phone: e.target.value })} />
           <input style={input_styles} placeholder="Address" onChange={e => setForm({ ...form, address: e.target.value })} />  
-        </form>
+        
         <span style={span_styles}></span>
+        {error && (
+          <div style={{ color: "red", fontSize: "14px", marginTop: "8px" }}>
+          {error}
+          </div>
+        )}
         <button style={button_styles} onClick={register}>SignUp</button>
         <span style={span_styles}></span>
+        </form>
       </div>
     </>
   );

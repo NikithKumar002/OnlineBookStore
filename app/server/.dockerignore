@@ -3,15 +3,12 @@ node_modules
 npm-debug.log
 yarn-error.log
 
-# Build output
-build
-dist
-
-# Environment files
+# Environment
 .env
-.env.local
-.env.development
-.env.production
+
+# Logs
+logs
+*.log
 
 # VCS
 .git
@@ -28,3 +25,6 @@ docker-compose.yml
 # Editor
 .vscode
 .idea
+
+# Tests / coverage
+coverage

@@ -4,6 +4,7 @@ app/server/dist
 app/server/dist-ssr
 app/server/*.local.env
 app/server/jest-stare
+app/frontend-bookstore/node_modules
 
 # Editor directories and files
 .vscode/*

@@ -12,8 +12,10 @@ import Home from "./pages/Home";
 
 function MainApp() {
   const [active, setActive] = useState(null);
-  const { user } = useAuth();
-  
+  const auth = useAuth();
+  console.log(auth);
+  const user = auth?.user;
+
   console.log("Rendering Login Form"); 
   console.log("Active state:", active);     
 
@@ -24,13 +26,13 @@ function MainApp() {
       {user && !active && <Home />}
 
       {active === "User Login" && (
-        <Modal title="User Login" onClose={() => setActive(null)} onSwitch={() => setActive("New User Registration")}>
+        <Modal title="User Login" onClose={() => setActive(null)} onSwitch={() => setActive("User Login")}>
           <LoginForm onSuccess={() => setActive(null)}/>
         </Modal>
       )}
 
       {active === "New User Registration" && (
-        <Modal title="New User Registration" onClose={() => setActive(null)} onSwitch={() => setActive("User Login")}>
+        <Modal title="New User Registration" onClose={() => setActive(null)} onSwitch={() => setActive("New User Registration")}>
           <RegisterForm onSuccess={() => setActive(null)}/>
         </Modal>
       )}
