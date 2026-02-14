@@ -1,11 +1,7 @@
 import axios from "axios";
 
-const BACKEND_HOST= process.env.BACKEND_HOSTNAME || "localhost"
-const PORT = process.env.BACKEND_APP_PORT || 3000
-const BACKEND_URL=`http://${BACKEND_HOST}:${PORT}`
-
 const api = axios.create({
-  baseURL: BACKEND_URL || "/api", // Nginx URL
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },
