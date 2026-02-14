@@ -1,7 +1,7 @@
-const axios = require("axios");
+import axios from "axios";
 
-const BACKEND_HOST= process.env.REACT_APP_BACKEND_HOST || "localhost"
-const PORT = process.env.REACT_APP_PORT || 3000
+const BACKEND_HOST= process.env.BACKEND_HOSTNAME || "localhost"
+const PORT = process.env.BACKEND_APP_PORT || 3000
 const BACKEND_URL=`http://${BACKEND_HOST}:${PORT}`
 
 const api = axios.create({

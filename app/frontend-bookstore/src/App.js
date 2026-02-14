@@ -12,8 +12,10 @@ import Home from "./pages/Home";
 
 function MainApp() {
   const [active, setActive] = useState(null);
-  const { user } = useAuth();
-  
+  const auth = useAuth();
+  console.log(auth);
+  const user = auth?.user;
+
   console.log("Rendering Login Form"); 
   console.log("Active state:", active);     
 

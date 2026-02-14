@@ -5,30 +5,22 @@ services:
     build:
       context: ./frontend-bookstore
     container_name: bookstore-frontend
-    volumes:
-      - ./frontend-bookstore:/app
-      - /app/node_modules
+    image: bookstore-frontend-${APP_VERSION}
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - BACKEND_HOST=bookstore-backend
-      - PORT=3000
-    # ports:
-    #   - "80:80"
+      - BACKEND_APP_PORT=3001
     ports:
-      - "3000:3000"
+      - "80:3000"
     depends_on:
       - webapp
     networks:
       - front-tier
-      - back-tier
 
   webapp:
     build:
       context: ./server
     container_name: bookstore-backend
-    volumes:
-      - ./server:/app
-      - /app/node_modules
+    image: bookstore-backend-${APP_VERSION}
     # expose:
     #   - "3000"
     ports:
@@ -43,6 +35,7 @@ services:
     depends_on:
       - mongodb
     networks:
+      - front-tier
       - back-tier
 
   mongodb:
