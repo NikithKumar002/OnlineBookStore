@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-backend
+  namespace: onlinebookstore
+  labels:
+    app: bookstore-backend
+spec:
+  replicas: 
+  selector:
+    matchLabels:
+      app: bookstore-backend
+  template:
+    metadata:
+      labels:
+        app: bookstore-backend
+    spec:
+      containers:
+      - name: bookstore-backend
+        image: bookstore-backend-1:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGO_URI
+          value: "mongodb://bookstore-mongodb:27017/onlinebookstore"
+        - name: PORT
+          value: "3000"
+        - name: JWT_SECRET
+          value: "super_secret_key_123"
+        - name: JWT_EXPIRES_IN
+          value: "1d"
+        - name: ACCESS_TOKEN_EXPIRE
+          value: "15m"
+        - name: REFRESH_TOKEN_EXPIRE
+          value: "7d"
+

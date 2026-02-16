@@ -1,0 +1,46 @@
+apiVersion: batch/v1
+kind: Job
+metadata: 
+  name: mongodb-post-sync-runner
+  namespace: onlinebookstore
+spec:
+  template:
+    spec:
+      serviceAccountName: kubectl-runner
+      restartPolicy: OnFailure
+      containers:
+        - name: testkubectlterminal
+          image: bitnami/kubectl:latest
+          command: 
+          - "bash"
+          - "-c"
+          - |
+            echo "Waiting for all MongoDB pods to be Ready..."
+            replicaCount=$(kubectl get sts mongodb -n onlinebookstore -o jsonpath='{.spec.replicas}')
+            while true; do
+              readyPods=$(kubectl get pods -l app=mongo -n onlinebookstore \
+                    -o jsonpath='{.items[?(@.status.phase=="Running")].metadata.name}' | wc -w)
+              echo "Ready pods: $readyPods / $replicaCount"
+              if [ "$readyPods" -eq "$replicaCount" ]; then
+                echo "All pods are running. Proceeding..."
+                break
+              fi
+              echo "Waiting 10 seconds..."
+              sleep 10
+            done
+            echo "Checking if replica set is initialized..."
+            confStatus=$(kubectl exec mongodb-0 -n onlinebookstore -- \
+              mongosh --quiet --eval "rs.status().ok" 2>/dev/null || echo "0")
+            if [ "$confStatus" != "1" ]; then
+              echo "Replica set not initialized. Running rs.initiate()..."
+              kubectl exec mongodb-0 -n onlinebookstore -- \
+                mongosh --eval 'rs.initiate({
+                                  _id: "rs0",
+                                  members: [
+                                    { _id: 0, host: "mongodb-0.bookstore-mongodb:27017" },
+                                    { _id: 1, host: "mongodb-1.bookstore-mongodb:27017" }
+                                  ]
+                                })'
+            else
+              echo "Replica set already initialized. Skipping."
+            fi

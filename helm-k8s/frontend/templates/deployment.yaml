@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-frontend
+  namespace: onlinebookstore
+  labels:
+    app: bookstore-frontend
+spec:
+  replicas: 
+  selector:
+    matchLabels:
+      app: bookstore-frontend
+  template:
+    metadata:
+      labels:
+        app: bookstore-frontend
+    spec:
+      containers:
+      - name: bookstore-frontend
+        image: bookstore-frontend:1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: CHOKIDAR_USEPOLLING
+          value: "true"
+        - name: BACKEND_APP_PORT
+          value: "3000"
+        - name: BACKEND_HOST
+          value: "bookstore-backend"
+
