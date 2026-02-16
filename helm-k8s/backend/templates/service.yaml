@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookstore-backend
+  namespace: onlinebookstore
+spec:
+  type: ClusterIP
+  selector: 
+    app: bookstore-backend
+  ports:
+    - port: 3000
+      name: bookstore-backend

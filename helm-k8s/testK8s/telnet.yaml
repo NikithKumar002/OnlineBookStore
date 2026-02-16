@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: telnet-test
+  namespace: onlinebookstore
+spec:
+  containers:
+    - name: telnet
+      # image: busybox:1.36
+      image: jonlabelle/network-tools
+      command: ["sleep", "3600"]
+  restartPolicy: Never
